@@ -1,0 +1,64 @@
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+out/
+
+### Logs ###
+logs/
+*.log
+
+### Maven ###
+target/
+*.war
+*.ear
+
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.properties
+*.jar
+*.war
+*.ear
+
+### Spring Boot ###
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.properties
+
+### Configuration ###
+/*.env
+/*.properties
+/*.yml
+/.settings/
+.env
+.env.local
+.secrets/
+!.env.example
+
+### OS Specific ###
+.DS_Store
+Thumbs.db
+
+### IDE Specific ###
+.vscode/
+
+### Node Modules (for frontend) ###
+node_modules/
+
+### Test Reports ###
+/test-output/
+/reports/
+
+### IntelliJ Module Cache ###
+.idea_modules/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/vcs.xml
+
+### Lombok ###
+.lombok/
