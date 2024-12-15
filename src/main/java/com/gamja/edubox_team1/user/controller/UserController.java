@@ -1,8 +1,8 @@
-package com.gamja.edubox_team1.controller;
+package com.gamja.edubox_team1.user.controller;
 
-import com.gamja.edubox_team1.model.dto.UserDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.service.UserService;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,29 +18,29 @@ public class UserController {
 
     // 회원가입
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        UserDTO createdUser = userService.createUser(userRequestDTO);
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO createdUser = userService.createUser(userRequestDTO);
         return ResponseEntity.ok(createdUser);
     }
 
     // 특정 회원 정보 조회
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String id) {
-        UserDTO user = userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String id) {
+        UserResponseDTO user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     // 회원 목록 조회
     @GetMapping
-    public ResponseEntity<List<UserDTO>> listUsers() {
-        List<UserDTO> users = userService.getAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> listUsers() {
+        List<UserResponseDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
     // 회원 정보 수정
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable String id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserDTO updatedUser = userService.updateUser(id, userRequestDTO);
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String id, @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO updatedUser = userService.updateUser(id, userRequestDTO);
         return ResponseEntity.ok(updatedUser);
     }
 

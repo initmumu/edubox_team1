@@ -1,9 +1,10 @@
 package com.gamja.edubox_team1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamja.edubox_team1.model.dto.UserDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.service.UserService;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.service.UserService;
+import com.gamja.edubox_team1.user.controller.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -62,7 +63,7 @@ class UserControllerTest {
         requestDTO.setEmail("john@example.com");
         requestDTO.setBio("Hello World!");
 
-        UserDTO responseDTO = new UserDTO();
+        UserResponseDTO responseDTO = new UserResponseDTO();
         responseDTO.setNo(1L);
         responseDTO.setId("user123");
         responseDTO.setNickname("john_doe");
@@ -84,7 +85,7 @@ class UserControllerTest {
     // 특정 회원 정보 조회 테스트
     @Test
     void getUserTest() throws Exception {
-        UserDTO responseDTO = new UserDTO();
+        UserResponseDTO responseDTO = new UserResponseDTO();
         responseDTO.setNo(1L);
         responseDTO.setId("user123");
         responseDTO.setNickname("john_doe");
@@ -105,7 +106,7 @@ class UserControllerTest {
     // 회원 목록 조회 테스트
     @Test
     void listUsersTest() throws Exception {
-        UserDTO responseDTO = new UserDTO();
+        UserResponseDTO responseDTO = new UserResponseDTO();
         responseDTO.setNo(1L);
         responseDTO.setId("user123");
         responseDTO.setNickname("john_doe");

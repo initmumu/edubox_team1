@@ -1,8 +1,8 @@
 package com.gamja.edubox_team1.util;
 
-import com.gamja.edubox_team1.model.dto.UserDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.model.entity.User;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.model.entity.User;
 
 import java.util.Date;
 
@@ -25,16 +25,16 @@ public class UserMapper {
 
     // 2. User → UserDTO
     // 데이터베이스에서 가져온 User entity -> 응답용 DTO로 변환
-    public static UserDTO toDto(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setNo(user.getNo());            // 엔티티의 no를 DTO의 no로 설정
-        userDTO.setId(user.getId());
-        userDTO.setNickname(user.getNickname());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setImg(user.getImg());
-        userDTO.setBio(user.getBio());
-        userDTO.setRole(user.getRole());
-        userDTO.setSignupDate(user.getSignupDate().toString()); // Date → String 변환
-        return userDTO;
+    public static UserResponseDTO toDto(User user) {
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setNo(user.getNo());            // 엔티티의 no를 DTO의 no로 설정
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setNickname(user.getNickname());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setImg(user.getImg());
+        userResponseDTO.setBio(user.getBio());
+        userResponseDTO.setRole(user.getRole());
+        userResponseDTO.setSignupDate(user.getSignupDate().toString()); // Date → String 변환
+        return userResponseDTO;
     }
 }

@@ -1,10 +1,10 @@
-package com.gamja.edubox_team1.service;
+package com.gamja.edubox_team1.user.service;
 
-import com.gamja.edubox_team1.exception.UserNotFoundException;
-import com.gamja.edubox_team1.model.dto.UserDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.model.repository.UserRepository;
-import com.gamja.edubox_team1.model.entity.User;
+import com.gamja.edubox_team1.user.exception.UserNotFoundException;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.model.repository.UserRepository;
+import com.gamja.edubox_team1.user.model.entity.User;
 import com.gamja.edubox_team1.util.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,21 +19,21 @@ public class UserService {
     private UserRepository userRepository;
 
     // 사용자 생성
-    public UserDTO createUser(UserRequestDTO userRequestDTO) {
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         User user = UserMapper.toEntity(userRequestDTO); // DTO를 엔티티로 변환
         User savedUser = userRepository.save(user);
         return UserMapper.toDto(savedUser); // 저장된 엔티티를 다시 DTO로 변환
     }
 
     // 사용자 단일 조회 (ID로)
-    public UserDTO getUserById(String id) {
+    public UserResponseDTO getUserById(String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다. ID: " + id));
         return UserMapper.toDto(user);
     }
 
     // 사용자 전체 목록 조회
-    public List<UserDTO> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
                 .map(UserMapper::toDto)
@@ -41,14 +41,14 @@ public class UserService {
     }
 
     // 사용자 이메일로 조회
-    public UserDTO getUserByEmail(String email) {
+    public UserResponseDTO getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다. 이메일: " + email));
         return UserMapper.toDto(user);
     }
 
     // 사용자 수정
-    public UserDTO updateUser(String id, UserRequestDTO userRequestDTO) {
+    public UserResponseDTO updateUser(String id, UserRequestDTO userRequestDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다. ID: " + id));
 

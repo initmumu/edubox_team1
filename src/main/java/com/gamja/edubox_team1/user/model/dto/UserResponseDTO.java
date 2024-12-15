@@ -1,19 +1,15 @@
-package com.gamja.edubox_team1.model.dto;
-import com.gamja.edubox_team1.model.enums.UserRole;
+package com.gamja.edubox_team1.user.model.dto;
+import com.gamja.edubox_team1.user.model.enums.UserRole;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @Schema(description = "사용자 정보 응답 객체")
-public class UserDTO {
+public class UserResponseDTO {
 
     @Schema(description = "사용자 고유 번호", example = "12345")
     private long no;
