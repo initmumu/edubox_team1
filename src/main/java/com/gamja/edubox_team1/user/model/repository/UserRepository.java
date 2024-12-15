@@ -1,7 +1,7 @@
-package com.gamja.edubox_team1.model.repository;
+package com.gamja.edubox_team1.user.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.gamja.edubox_team1.model.entity.User;
+import com.gamja.edubox_team1.user.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;

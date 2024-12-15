@@ -1,8 +1,8 @@
-package com.gamja.edubox_team1.controller;
+package com.gamja.edubox_team1.user.controller;
 
-import com.gamja.edubox_team1.model.dto.UserResponseDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.service.UserService;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

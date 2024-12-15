@@ -1,10 +1,10 @@
-package com.gamja.edubox_team1.service;
+package com.gamja.edubox_team1.user.service;
 
-import com.gamja.edubox_team1.exception.UserNotFoundException;
-import com.gamja.edubox_team1.model.dto.UserResponseDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.model.repository.UserRepository;
-import com.gamja.edubox_team1.model.entity.User;
+import com.gamja.edubox_team1.user.exception.UserNotFoundException;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.model.repository.UserRepository;
+import com.gamja.edubox_team1.user.model.entity.User;
 import com.gamja.edubox_team1.util.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

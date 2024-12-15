@@ -1,4 +1,4 @@
-package com.gamja.edubox_team1.exception;
+package com.gamja.edubox_team1.user.exception;
 
 public class UserNotFoundException extends RuntimeException {
 

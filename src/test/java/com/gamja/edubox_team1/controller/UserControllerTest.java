@@ -1,9 +1,10 @@
 package com.gamja.edubox_team1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamja.edubox_team1.model.dto.UserResponseDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.service.UserService;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.service.UserService;
+import com.gamja.edubox_team1.user.controller.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

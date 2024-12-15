@@ -1,6 +1,6 @@
-package com.gamja.edubox_team1.model.entity;
+package com.gamja.edubox_team1.user.model.entity;
 
-import com.gamja.edubox_team1.model.enums.UserRole;
+import com.gamja.edubox_team1.user.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

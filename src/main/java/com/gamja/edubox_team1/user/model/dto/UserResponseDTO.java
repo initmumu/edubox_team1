@@ -1,5 +1,5 @@
-package com.gamja.edubox_team1.model.dto;
-import com.gamja.edubox_team1.model.enums.UserRole;
+package com.gamja.edubox_team1.user.model.dto;
+import com.gamja.edubox_team1.user.model.enums.UserRole;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

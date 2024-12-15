@@ -1,8 +1,8 @@
 package com.gamja.edubox_team1.util;
 
-import com.gamja.edubox_team1.model.dto.UserResponseDTO;
-import com.gamja.edubox_team1.model.dto.UserRequestDTO;
-import com.gamja.edubox_team1.model.entity.User;
+import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
+import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.model.entity.User;
 
 import java.util.Date;
 
