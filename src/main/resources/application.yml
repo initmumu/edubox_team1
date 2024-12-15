@@ -1,0 +1,17 @@
+jwt:
+  secret: "edubox_team1edubox_team1edubox_team1"
+  validity-in-milliseconds: 3600000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # 테이블 자동 생성 (옵션: validate, update, create, create-drop)
+    show-sql: true       # 실행되는 SQL을 출력
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL에 맞는 Hibernate 방언 설정
