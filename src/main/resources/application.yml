@@ -1,3 +1,0 @@
-jwt:
-  secret: "edubox_team1edubox_team1edubox_team1"
-  validity-in-milliseconds: 3600000
