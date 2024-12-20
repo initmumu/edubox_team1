@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
+	id 'org.springframework.boot' version '3.3.6'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -36,10 +36,14 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-	// Testing dependencies
+	// Spring Boot Starter Test (includes Mockito by default)
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.junit.jupiter:junit-jupiter'
-	testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+	// Mockito Core (optional for explicit Mockito support)
+	testImplementation 'org.mockito:mockito-core:5.12.0'
+	// Mockito Inline (optional for mocking static methods or final classes)
+	testImplementation 'org.mockito:mockito-inline:5.2.0'
+	// If you're using JUnit 5 (default in Spring Boot 3.x), Mockito-JUnit-Jupiter
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.12.0'
 }
 
 
