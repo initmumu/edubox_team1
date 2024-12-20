@@ -12,16 +12,13 @@ import lombok.Setter;
 public class UserResponseDTO {
 
     @Schema(description = "사용자 고유 번호", example = "12345")
-    private long no;
-
-    @Schema(description = "사용자 아이디", example = "user123")
-    private String id;
-
-    @Schema(description = "사용자 닉네임", example = "john_doe")
-    private String nickname;
+    private long id;
 
     @Schema(description = "사용자 이메일", example = "johnDoe1122@gmail.com")
     private String email;
+
+    @Schema(description = "사용자 닉네임", example = "john_doe")
+    private String nickname;
 
     @Schema(description = "사용자 권한 유형", allowableValues = {"STUDENT", "CREATOR", "ADMIN"}, example = "STUDENT")
     private UserRole role;
@@ -31,6 +28,9 @@ public class UserResponseDTO {
 
     @Schema(description = "사용자 소개 또는 바이오", example = "안녕하세요, 저는 개발자입니다.")
     private String bio;
+
+    @Schema(description = "사용자 프로필 링크", example = "edubox.com/users/@cmh1199")
+    private String profileLink;
 
     @Schema(description = "사용자 가입 날짜", example = "2024-01-01")
     private String signupDate;
