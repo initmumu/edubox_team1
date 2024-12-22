@@ -1,8 +1,7 @@
 package com.gamja.edubox_team1.user.service;
 
 import com.gamja.edubox_team1.user.exception.UserNotFoundException;
-import com.gamja.edubox_team1.user.model.dto.UserResponseDTO;
-import com.gamja.edubox_team1.user.model.dto.UserRequestDTO;
+import com.gamja.edubox_team1.user.model.dto.*;
 import com.gamja.edubox_team1.user.model.repository.UserRepository;
 import com.gamja.edubox_team1.user.model.entity.User;
 import com.gamja.edubox_team1.util.UserMapper;
@@ -19,14 +18,27 @@ public class UserService {
     private UserRepository userRepository;
 
     // 사용자 생성
-    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        User user = UserMapper.toEntity(userRequestDTO); // DTO를 엔티티로 변환
+    public UserResponseDTO createUser(UserSignupRequestDTO userSignupRequestDTO) {
+        // DTO → Entity 변환
+        User user = UserMapper.toEntity(userSignupRequestDTO);
+
+        // 이메일에서 닉네임 추출
+        String email = user.getEmail();
+        if (email.contains("@")) {
+            user.setNickname(email.substring(0, email.indexOf('@')));
+        } else {
+            throw new IllegalArgumentException("유효하지 않은 이메일 형식입니다: " + email);
+        }
+
+        // 사용자 저장
         User savedUser = userRepository.save(user);
-        return UserMapper.toDto(savedUser); // 저장된 엔티티를 다시 DTO로 변환
+
+        // 저장된 사용자 → DTO 변환 후 반환
+        return UserMapper.toDto(savedUser);
     }
 
     // 사용자 단일 조회 (ID로)
-    public UserResponseDTO getUserById(String id) {
+    public UserResponseDTO getUserById(long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다. ID: " + id));
         return UserMapper.toDto(user);
@@ -47,22 +59,24 @@ public class UserService {
         return UserMapper.toDto(user);
     }
 
-    // 사용자 수정
-    public UserResponseDTO updateUser(String id, UserRequestDTO userRequestDTO) {
+    // 사용자 정보 수정
+    public UserResponseDTO updateUserProfile(long id, UserUpdateProfileRequestDTO userUpdateProfileRequestDTO) {
+        // 사용자 조회
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다. ID: " + id));
 
-        // 필드 업데이트
-        existingUser.setNickname(userRequestDTO.getNickname());
-        existingUser.setEmail(userRequestDTO.getEmail());
-        existingUser.setBio(userRequestDTO.getBio());
+        // Entity → 업데이트
+        User updatedUser = UserMapper.updateEntity(existingUser, userUpdateProfileRequestDTO);
 
-        User updatedUser = userRepository.save(existingUser);
+        // 업데이트된 사용자 저장
+        updatedUser = userRepository.save(updatedUser);
+
+        // 저장된 사용자 → DTO 변환 후 반환
         return UserMapper.toDto(updatedUser);
     }
 
     // 사용자 삭제
-    public void deleteUser(String id) {
+    public void deleteUser(long id) {
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("사용자를 찾을 수 없습니다. ID: " + id);
         }

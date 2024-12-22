@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users") // 데이터베이스의 "users" 테이블과 매핑
@@ -15,10 +15,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long no; // 기본 키, 자동 증가
+    private Long id; // 기본 키, 자동 증가
 
-    @Column(nullable = false, unique = true, updatable = false)
-    private String id; // 사용자 고유 ID (클라이언트에 보이는 ID)
+    @Column(nullable = false, unique = true)
+    private String email; // 이메일
 
     @Column(nullable = false)
     private String password; // SHA-256 암호화된 비밀번호
@@ -26,8 +26,8 @@ public class User {
     @Column(nullable = false)
     private String nickname; // 닉네임
 
-    @Column(nullable = false, unique = true)
-    private String email; // 이메일
+    @Column(length = 15)
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,7 +40,9 @@ public class User {
     @Column(length = 500)
     private String bio; // 사용자 소개
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private String profileLink;
+
     @Column(nullable = false, updatable = false)
-    private Date signupDate; // 가입 날짜 (생성 시 고정)
+    private LocalDateTime signupDate; // 가입 날짜 (생성 시 고정)
 }
