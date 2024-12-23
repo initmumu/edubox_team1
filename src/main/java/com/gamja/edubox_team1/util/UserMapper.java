@@ -3,17 +3,26 @@ package com.gamja.edubox_team1.util;
 import com.gamja.edubox_team1.user.model.dto.*;
 import com.gamja.edubox_team1.user.model.entity.User;
 import com.gamja.edubox_team1.user.model.enums.UserRole;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Component
 public class UserMapper {
 
+    private final PasswordEncoder passwordEncoder;
+
+    public UserMapper(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     // 1. UserSignupRequestDTO → User (회원가입 요청)
-    public static User toEntity(UserSignupRequestDTO userSignupRequestDTO) {
+    public User toEntity(UserSignupRequestDTO userSignupRequestDTO) {
         User user = new User();
         try {
-            String encryptedPassword = PasswordEncryptor.encryptPassword(userSignupRequestDTO.getPassword());
+            String encryptedPassword = passwordEncoder.encode(userSignupRequestDTO.getPassword());
             user.setPassword(encryptedPassword); // 암호화된 비밀번호 설정
         } catch (Exception e) {
             throw new RuntimeException("비밀번호 암호화에 실패했습니다.", e);
@@ -26,7 +35,7 @@ public class UserMapper {
     }
 
     // 2. UserUpdateRequestDTO → User (회원 정보 수정 요청)
-    public static User updateEntity(User user, UserUpdateProfileRequestDTO userUpdateProfileRequestDTO) {
+    public User updateEntity(User user, UserUpdateProfileRequestDTO userUpdateProfileRequestDTO) {
         if (userUpdateProfileRequestDTO.getImg() != null) {
             user.setImg(userUpdateProfileRequestDTO.getImg());
         }
@@ -43,7 +52,7 @@ public class UserMapper {
     }
 
     // 3. User → UserResponseDTO (응답 데이터 변환)
-    public static UserResponseDTO toDto(User user) {
+    public UserResponseDTO toDto(User user) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setEmail(user.getEmail());
