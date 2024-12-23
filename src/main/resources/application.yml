@@ -1,3 +1,4 @@
 jwt:
   secret: "edubox_team1edubox_team1edubox_team1"
-  validity-in-milliseconds: 3600000
+  access-token-duration: 5000
+  refresh-token-duration: 1209600000

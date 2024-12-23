@@ -1,10 +1,10 @@
 package com.gamja.edubox_team1.auth.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
-public class LoginResponseDto {
+@Setter
+public class RefreshTokenResponseDto {
     private String refreshToken;
 }

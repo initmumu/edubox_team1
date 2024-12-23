@@ -1,7 +1,7 @@
 package com.gamja.edubox_team1.auth.security;
 
 import com.gamja.edubox_team1.auth.config.JwtProperties;
-import com.gamja.edubox_team1.auth.dto.entity.User;
+import com.gamja.edubox_team1.auth.dto.entity.AuthUser;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -13,21 +13,32 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key;
-    private final long validityInMilliseconds;
+    private final long ACCESS_TOKEN_DURATION;
+    private final long REFRESH_TOKEN_DURATION;
 
     public JwtTokenProvider(JwtProperties jwtProperties) {
         this.key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes());
-        this.validityInMilliseconds = jwtProperties.getValidityInMilliseconds();
+        this.ACCESS_TOKEN_DURATION = jwtProperties.getAccessTokenDuration();
+        this.REFRESH_TOKEN_DURATION = jwtProperties.getRefreshTokenDuration();
+
     }
 
-    public String createToken(User user) {
+    public String generateAccessToken(AuthUser authUser) {
+        return createToken(authUser, ACCESS_TOKEN_DURATION);
+    }
+
+    public String generateRefreshToken(AuthUser authUser) {
+        return createToken(authUser, REFRESH_TOKEN_DURATION);
+    }
+
+    public String createToken(AuthUser authUser, long tokenExpiryTime) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        Date validity = new Date(now.getTime() + tokenExpiryTime);
 
         return Jwts.builder()
-                .setSubject(user.getId())
-                .claim("role", user.getRole())
-                .claim("username", user.getId())
+                .setSubject(authUser.getEmail())
+                .claim("role", authUser.getRole())
+                .claim("id", authUser.getId())
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -43,10 +54,12 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getUsername(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
+    public long getId(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+                .getBody();
+        return claims.get("id", Long.class); // 존재하지 않으면 null 반환
     }
 }
