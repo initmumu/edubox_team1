@@ -1,7 +1,10 @@
 package com.gamja.edubox_team1.auth.security;
 
-import com.gamja.edubox_team1.auth.dto.entity.User;
-import com.gamja.edubox_team1.auth.repository.UserRepository;
+import com.gamja.edubox_team1.auth.dto.entity.AuthUser;
+import com.gamja.edubox_team1.auth.exception.EmptyAccessTokenException;
+import com.gamja.edubox_team1.auth.exception.ExpiredAccessTokenException;
+import com.gamja.edubox_team1.auth.repository.AuthRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,27 +24,43 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String token = resolveToken(request);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            String username = jwtTokenProvider.getUsername(token);
-            Optional<User> userDetails = userRepository.findById(username);
-
-            if (userDetails.isEmpty()) {
-                throw new UsernameNotFoundException("User not found");
-            }
-
-            User user = userDetails.get();
-
-            var auth = new UsernamePasswordAuthenticationToken(user, null, List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        String requestURI = request.getRequestURI();
+        if (requestURI.startsWith("/v1/auth/login") ||
+            requestURI.startsWith("/v1/auth/reissue") ||
+            requestURI.startsWith("/v1/auth/register")) {
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        String accessToken = resolveToken(request);
+        if (accessToken == null) {
+            throw new EmptyAccessTokenException();
+        }
+
+        if (!jwtTokenProvider.validateToken(accessToken)) {
+            throw new ExpiredAccessTokenException();
+        }
+
+        long userNo = jwtTokenProvider.getId(accessToken);
+        Optional<AuthUser> userDetails = authRepository.findById(userNo);
+
+        if (userDetails.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        AuthUser authUser = userDetails.get();
+
+        var auth = new UsernamePasswordAuthenticationToken(authUser,
+                null, List.of(new SimpleGrantedAuthority("ROLE_" + authUser.getRole())));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
         filterChain.doFilter(request, response);
     }
 

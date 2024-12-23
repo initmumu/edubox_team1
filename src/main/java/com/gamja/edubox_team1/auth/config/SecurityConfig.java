@@ -1,12 +1,12 @@
 package com.gamja.edubox_team1.auth.config;
 
-import com.gamja.edubox_team1.auth.repository.UserRepository;
+import com.gamja.edubox_team1.auth.repository.AuthRepository;
+import com.gamja.edubox_team1.auth.security.ErrorHandleFilter;
 import com.gamja.edubox_team1.auth.security.JwtAuthenticationFilter;
 import com.gamja.edubox_team1.auth.security.JwtTokenProvider;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,14 +25,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, UserRepository userRepository) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthRepository authRepository) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userRepository),
-                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, authRepository),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ErrorHandleFilter(), JwtAuthenticationFilter.class);
+
 
         return http.build();
     }
